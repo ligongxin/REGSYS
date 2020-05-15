@@ -5,3 +5,4 @@ import os
 BASEDIR=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 ADMIN_DB=os.path.join(BASEDIR,'db','admin')
+SCHOOL_DB=os.path.join(BASEDIR,'db','school')

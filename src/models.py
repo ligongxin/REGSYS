@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+# coding=gbk
 
 import pickle
 import os, time
@@ -9,8 +9,8 @@ from src import identifier
 class BaseModel:
     def save(self):
         """
-        ä½¿ç”¨pickleå¯¹è±¡ä¿å­˜æ–‡ä»¶
-        ï¼šreturn
+        Ê¹ÓÃpickle¶ÔÏó±£´æÎÄ¼ş
+        £ºreturn
         """
         nid = str(self.nid)
         file_pah = os.path.join(self.db_path, nid)
@@ -22,22 +22,72 @@ class Admin(BaseModel):
 
     def __init__(self, username, password):
         """
-        ç®¡ç†å‘˜åˆ›å»ºå¯¹è±¡
-        :param username:ç”¨æˆ·å
-        :param password:å¯†ç 
-        ï¼šreturn
+        ¹ÜÀíÔ±´´½¨¶ÔÏó
+        :param username:ÓÃ»§Ãû
+        :param password:ÃÜÂë
+        £ºreturn
         """
-        # nidæ˜¯å”¯ä¸€idï¼Œéšæœºå­—ç¬¦ä¸²
+        # nidÊÇÎ¨Ò»id£¬Ëæ»ú×Ö·û´®
         self.nid = identifier.AdminNid(Admin.db_path)
         self.username = username
         self.password = password
         self.create_time = time.strftime('%Y-%m-%d')
-        print('åˆ›å»ºæˆåŠŸ')
+        print('´´½¨³É¹¦')
 
     def __str__(self):
         return self.nid
 
+    @staticmethod
+    def login(username, password):
+        '''
+        ¹ÜÀíÔ±µÇÂ¼
+        :param username:ÓÃ»§Ãû
+        :param password:ÃÜÂë
+        '''
+        # ±éÀúadminÏÂµÄÎÄ¼ş
+        for item in os.listdir(os.path.join(Admin.db_path)):
+            obj = pickle.load(open(os.path.join(Admin.db_path, item), "rb+"))
+            if obj.username == username and obj.password == password:
+                print('µÇÂ¼³É¹¦')
+                return obj
+        return None
 
-if __name__ == '__main':
-    obj = Admin('lgx', 123456)
-    print(obj)
+
+class School(BaseModel):
+    db_path = settings.SCHOOL_DB
+
+    def __init__(self, name, address):
+        """
+        Ñ§Ğ£
+        :name:Ñ§Ğ£Ãû³Æ
+        :addrrss:Ñ§Ğ£µØÖ·
+        """
+        self.nid = identifier.SchoolNid(School.db_path)
+        self.shcool_name = name
+        self.address = address
+        self.income = 0
+
+    def __str__(self):
+        return self.shcool_name
+
+    @staticmethod
+    # ·µ»ØÑ§Ğ£¶ÔÏó
+    def get_all_list():
+        school_list = []
+        for item in os.listdir(os.path.join(School.db_path)):
+            obj = pickle.load(open(os.path.join(School.db_path, item), 'rb+'))
+            school_list.append(obj)
+        return school_list
+
+
+if __name__ == '__main__':
+    # obj = Admin('lgx', 123456)
+    # obj.save()
+    # print(obj.username)
+    # Admin.login('lgx', 123456)
+    # obj=School('Çú½­ÖĞÑ§','ÉØ¹ØÊĞ')
+    # obj.save()
+    # print(obj)
+    ret=School.get_all_list()
+    for i in ret:
+        print(i)
