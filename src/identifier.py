@@ -6,7 +6,7 @@ from lib import commons
 
 class Nid:
     def __init__(self, role, db_path):
-        role_list = ['admin', 'school']
+        role_list = ['admin', 'school', 'teacher']
         if role not in role_list:
             raise Exception('用户定义角色错误，选项为%s' % role_list)
         self.role = role
@@ -20,7 +20,6 @@ class Nid:
         pass
 
 
-
 # 创建admin的nid
 class AdminNid(Nid):
     def __init__(self, db_path):
@@ -30,3 +29,8 @@ class AdminNid(Nid):
 class SchoolNid(Nid):
     def __init__(self, db_path):
         super(SchoolNid, self).__init__('school', db_path)
+
+
+class TeacherNid(Nid):
+    def __init__(self, db_path):
+        super(TeacherNid, self).__init__('teacher', db_path)

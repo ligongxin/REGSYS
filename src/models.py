@@ -80,6 +80,23 @@ class School(BaseModel):
         return school_list
 
 
+class Teacher(BaseModel):
+    db_path = settings.TEACHER_DB
+
+    def __init__(self, name, lever):
+        '''
+        name:教师姓名
+        lever：教师级别
+        '''
+        self.nid = identifier.TeacherNid(Teacher.db_path)
+        self.name = name
+        self.lever = lever
+        self.__account = 0
+
+
+class Classes(BaseModel): pass
+
+
 if __name__ == '__main__':
     # obj = Admin('lgx', 123456)
     # obj.save()
@@ -88,6 +105,6 @@ if __name__ == '__main__':
     # obj=School('曲江中学','韶关市')
     # obj.save()
     # print(obj)
-    ret=School.get_all_list()
+    ret = School.get_all_list()
     for i in ret:
         print(i)
