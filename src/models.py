@@ -38,6 +38,7 @@ class Admin(BaseModel):
         return self.nid
 
 
-if __name__ == '__main':
-    obj = Admin('lgx', 123456)
-    print(obj)
+if __name__=="__main__":
+    obj = Admin('lgx',123456)
+    obj.save()
+    print(obj.username)
