@@ -3,11 +3,17 @@
 import pickle
 from lib import commons
 import os
+from conf import settings
+
 
 
 class Nid:
     def __init__(self, role, db_path):
+
         role_list = ['admin', 'school', 'teacher', 'course', 'course_to_teacher', 'classes', 'student']
+
+
+
         if role not in role_list:
             raise Exception('用户定义角色错误，选项为%s' % role_list)
         self.role = role
@@ -28,6 +34,7 @@ class Nid:
 class AdminNid(Nid):
     def __init__(self, db_path):
         super(AdminNid, self).__init__('admin', db_path)
+
 
 
 class SchoolNid(Nid):
@@ -59,3 +66,11 @@ class ClassesNid(Nid):
 class StudentNid(Nid):
     def __init__(self, db_path):
         super(StudentNid, self).__init__('student', db_path)
+
+
+
+if __name__=="__main__":
+    db_path=settings.ADMIN_DB
+    a=AdminNid(db_path)
+    print(a)
+

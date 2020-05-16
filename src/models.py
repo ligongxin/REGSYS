@@ -183,36 +183,51 @@ class Classes(BaseModel):
             ret.append(obj)
         return ret
 
+class Score():
+    '''成绩单'''
+    def __init__(self,student_id):
+        self.studentId=student_id
+        self.score_dist={}
+
+    def set(self,course_to_teacher_nid,number):
+        self.score_dist[course_to_teacher_nid]=number
+
+    def get(self,course_to_teacher_nid):
+        return self.score_dist.get(course_to_teacher_nid,None)
+
 
 class Student(BaseModel):
     db_path = settings.STUDENT_DB
 
-    def __init__(self, name, age, cla):
-        pass
+    def __init__(self, name, age, classes_id):
+        self.nid=identifier.StudentNid(Student.db_path)
+        self.name=name
+        self.age=age
+        self.classesId=classes_id
+        self.score=Score(self.nid)
 
+    @staticmethod
+    def get_all_list():
+        ret = []
+        for item in os.listdir(Student.db_path):
+            obj = pickle.load(open(os.path.join(Student.db_path, item), 'rb+'))
+            ret.append(obj)
+        return ret
+
+    def __str__(self):
+        return '学生姓名：%s 学生年龄：%s '%(self.name,self.age)
 
 if __name__ == '__main__':
-    # obj = Admin('lgx', 123456)
+    class_list=Classes.get_classes_list()
+    # obj=Student('彭文娟','27',class_list[0].nid)
     # obj.save()
-    # print(obj.username)
-    # Admin.login('lgx', 123456)
-    # S_obj=School('曲江中学','韶关市')
-    # S_obj.save()
-    # obj.save()
-    # print(obj)
-    # ret = School.get_all_list()
-    # for i in ret:
-    #     print(i)
-    # c_obj=Course('PYTHON','5800元','90天',S_obj.nid)
-    # c_obj.save()
-    # print(c_obj)
-    # a = Course.get_all_list()
-    # for i in a:
-    #     print(i)
-    t_obj = Teacher('彭老师', '1级')
-    t_obj.save()
-    for i in t_obj.get_teacher_list():
-        print(i)
-
-    # obj=CourseToTeacher(c_obj.nid,t_obj.nid)
-    # print(obj)
+    # # print(obj.name)
+    a=Student.get_all_list()
+    print(a[0])
+    # b=a[0].score
+    #
+    #
+    # nid='68bca59a-9742-11ea-91c3-acb57d2ecf4a'
+    # b.set(nid,50)
+    # print(b.get(nid))
+    # print(b.score_dist)

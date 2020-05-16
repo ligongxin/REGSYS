@@ -167,3 +167,5 @@ if __name__ == '__main__':
     # sid = int(sid)
     # school_obj = school_list[sid - 1]
     # print(school_obj.nid)
+
+
