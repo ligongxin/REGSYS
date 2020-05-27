@@ -138,10 +138,10 @@ class CourseToTeacher(BaseModel):
     db_path = settings.COURSE_TO_TEACHER_DB
 
     def __init__(self, course_id, teacher_id):
-        '''
+        """
         course_id: ¿Î³Ìid
         teacher_id: ½ÌÊ¦id
-        '''
+        """
         self.nid = identifier.CourseToTeacherNid(CourseToTeacher.db_path)
         self.courseId = course_id
         self.teacherId = teacher_id

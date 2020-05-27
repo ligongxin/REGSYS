@@ -16,6 +16,8 @@ def show_student():
     for item in student_list:
         print('学生信息 %s,学生分数：%s'%(item,item.score.get(nid)))
 
+def set_student_score():
+    pass
 
 def main():
     show = '''=================教师系统=====================
